@@ -48,5 +48,5 @@ jobs:
           echo "$SSH_KEY" >> ~/.ssh/ubuntu
           chmod 400 ~/.ssh/ubuntu
           echo -e "Host ubuntu\n\tUser ubuntu\n\tHostname 44.205.239.157\n\tIdentityFile ~/.ssh/ubuntu\n\tStrictHostKeyChecking No" >> ~/.ssh/config
-          rsync -r ssh build/ ubuntu:~/
+          rsync -r -e ssh build/ ubuntu:~/
           ssh ubuntu "pm2 reload all"

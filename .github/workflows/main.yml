@@ -41,6 +41,7 @@ jobs:
         run: |
           echo Configuring your frontend
           echo "$PWD"
+          echo "$SSH_KEY"
           npm ci
           npm run build
           mkdir ~/.ssh

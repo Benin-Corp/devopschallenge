@@ -28,15 +28,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      - name: Setup connection to hosting server
+      - name: Configure connection to hosting server
         run: |      
           mkdir ~/.ssh
           echo "$SSH_KEY" >> ~/.ssh/ubuntu
           chmod 400 ~/.ssh/ubuntu
           echo -e "Host ubuntu\n\tUser ubuntu\n\tHostname 44.205.239.157\n\tIdentityFile ~/.ssh/ubuntu\n\tStrictHostKeyChecking No" >> ~/.ssh/config
 
-      - name: Congigure backend
-        # working-directory: backend
+      - name: Configure express backend
         run: |
           echo Configuring your backend
           echo "$PWD"
@@ -44,11 +43,10 @@ jobs:
           rsync -r -z -e ssh backend/ ubuntu:~/backend
           ssh ubuntu "pm2 reload all"
 
-      - name: Configure frontend
+      - name: Configure react frontend
         working-directory: frontend
         run: |
           echo Configuring your frontend
-          echo "$PWD"
           npm ci
           npm run build
           rsync -r -e ssh build/ ubuntu:~/public_html

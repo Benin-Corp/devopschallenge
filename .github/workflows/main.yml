@@ -48,5 +48,5 @@ jobs:
           echo "$SSH_KEY" >> ~/.ssh/github-action
           chmod 400 ~/.ssh/github-action
           echo -e "Host github-actions\n\tUser github-actions\n\tHostname 44.205.239.157\n\tIdentityFile ~/.ssh/github-action\n\tStrictHostKeyChecking No" >> ~/.ssh/config
-          rsync -er ssh build/* github-actions:~/build
+          # rsync -er ssh build/* github-actions:~/build
           ssh github-actions "pm2 reload all"

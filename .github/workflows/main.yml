@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_WORKSPACE: /home/ubuntu/actions-runner/_work/devopschallenge/devopschallenge
+      SSH_KEY: ${{secrets.SSH_KEY}}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:

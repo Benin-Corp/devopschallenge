@@ -27,14 +27,23 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      
+      - name: Setup Server Connection
+        run: |      
+          mkdir ~/.ssh
+          echo "$SSH_KEY" >> ~/.ssh/ubuntu
+          chmod 400 ~/.ssh/ubuntu
+          echo -e "Host ubuntu\n\tUser ubuntu\n\tHostname 44.205.239.157\n\tIdentityFile ~/.ssh/ubuntu\n\tStrictHostKeyChecking No" >> ~/.ssh/config
 
       # Runs a single command using the runners shell
       - name: Congigure backend
-        working-directory: backend
+        # working-directory: backend
         run: |
           echo Configuring your backend
           echo "$PWD"
-          npm ci
+          cd backend && npm ci
+          rsync -r -z -e ssh backend/ ubuntu:~/backend
+          # ssh ubuntu "pm2 reload all"
 
       # Runs a set of commands using the runners shell
       - name: Configure frontend
@@ -44,9 +53,9 @@ jobs:
           echo "$PWD"
           npm ci
           npm run build
-          mkdir ~/.ssh
-          echo "$SSH_KEY" >> ~/.ssh/ubuntu
-          chmod 400 ~/.ssh/ubuntu
-          echo -e "Host ubuntu\n\tUser ubuntu\n\tHostname 44.205.239.157\n\tIdentityFile ~/.ssh/ubuntu\n\tStrictHostKeyChecking No" >> ~/.ssh/config
-          rsync -r -e ssh build/ ubuntu:~/
-          ssh ubuntu "pm2 reload all"
+          # mkdir ~/.ssh
+          # echo "$SSH_KEY" >> ~/.ssh/ubuntu
+          # chmod 400 ~/.ssh/ubuntu
+          # echo -e "Host ubuntu\n\tUser ubuntu\n\tHostname 44.205.239.157\n\tIdentityFile ~/.ssh/ubuntu\n\tStrictHostKeyChecking No" >> ~/.ssh/config
+          rsync -r -e ssh build/ ubuntu:~/public_html
+          # ssh ubuntu "pm2 reload all"

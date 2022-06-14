@@ -29,17 +29,18 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Congigure backend
-        # working-directory: backend
+        working-directory: backend
         run: |
           echo Configuring your backend
           echo "$PWD"
-          cd backend && npm ci
+          npm ci
 
       # Runs a set of commands using the runners shell
       - name: Congigure frontend
-        #working-directory: frontend
+        working-directory: frontend
         run: |
           echo Configuring your frontend
           echo "$PWD"
-          cd frontend && npm ci
+          npm ci
           npm run build
+          cp build /home/ubuntu/

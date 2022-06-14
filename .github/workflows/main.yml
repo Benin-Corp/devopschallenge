@@ -27,14 +27,14 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Congigure backend
-        working-directory: ./backend
+        working-directory: backend
         run: |
           echo Configuring your backend
           npm ci
 
       # Runs a set of commands using the runners shell
       - name: Congigure frontend
-        working-directory: ./frontend
+        working-directory: frontend
         run: |
           echo Configuring your frontend
           npm ci

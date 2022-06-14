@@ -41,7 +41,7 @@ jobs:
         run: |
           echo Configuring your backend
           echo "$PWD"
-          cd backend && npm ci
+          cd backend && npm ci && cd ../
           rsync -r -z -e ssh backend/ ubuntu:~/backend
           # ssh ubuntu "pm2 reload all"
 

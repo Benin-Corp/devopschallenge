@@ -1,0 +1,18 @@
+A Terraform Lightsail script with main.tf, output.tf and a Var.tf with a terrastate file in Terraform Cloud are needed for more automation.
+In Github a webhook is configured everytime terraform apply output a new ip address if not static.
+
+It establishes a secure connection to the AWS Lightsail server so that the compiled files can be synced
+
+This is done via rsync and ssh
+
+There is a env variable set in the GitHub settings, it contains the SSH key and a static IP address would have been added for more automation
+
+Everytime the GitHub repo is updated, the Actions script gets automatically triggered. The following actions are performed;
+
+It sets up a secure connection to the server.
+Installs all node modules for backend.
+Uploads the new backend to the server.
+Restarts the pm2 server that serves the backend.
+Compiles the react app.
+Uploads it to server.
+Server used is NGINX
